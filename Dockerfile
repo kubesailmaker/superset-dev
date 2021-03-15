@@ -1,4 +1,4 @@
-FROM preset/superset:0.37
+FROM preset/superset:dev
 
 RUN superset fab create-admin \
 		--username admin \
@@ -10,5 +10,6 @@ RUN superset db upgrade && superset init
 USER root
 RUN pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org --upgrade pip setuptools
 RUN pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org psycopg2 pyhive elasticsearch-dbapi ibm_db_sa
+COPY presto.py /usr/local/lib/python3.7/site-packages/pyhive/presto.py
 
 ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
